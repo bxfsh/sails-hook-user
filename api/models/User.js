@@ -61,56 +61,28 @@ module.exports = {
     var deferred = promise.defer();
     var requireAuth = false;
 
-    if (email && email.toLowerCase() === 'boxfish' && password === '1133557799') {
+    sails.log.debug('USER TRYING TO LOGIN:'.yellow, email);
 
-      sails.log.debug('User Login for Boxfish'.green, 'hardcoded pass');
-
-      // hard coded credentials
-      deferred.resolve({
-        user : {
-          username: 'boxfish',
-          email: 'services@boxfish.com',
-          teams: [{
-            id: '8a8083f24d4a7a7a014d4a7a86460001',
-            name: 'Boxfish',
-            platform: 'twitter',
-            platformRole: null,
-            teamRole: 'user'
-          }]
-        },
-        token: 'c1a25bb8-8f4f-4033-818e-7f3c3729977b'
-      });
-
-    } else {
-
-      sails.log.debug('USER TRYING TO LOGIN:'.yellow, email);
-
-      // curl -i -X POST -H "Content-Type:application/json" -d
-      // '{"email" : "clatko@boxfish.com", "password": "tester"}'
-      // http://staging-microservices.boxfish.com:8080/user/login
-
-      new adBox(sails.config.adBox.token, sails.config.adBox).req({
-        path: '/user/login',
-        method: 'POST',
-        data: {
-          email: email,
-          password: password
-        },
-        headers: { 'Content-Type': 'application/json' }
-      }, requireAuth).then(function(data) {
-        if (data) {
-          // data.user.email = data.user.email.value;
-          deferred.resolve(data);
-        } else {
-          sails.log.error(arguments);
-            deferred.reject({ message: 'Internal Server error' });
-        }
-      }, function(err) {
-        sails.log.error(err);
-        deferred.reject(err);
-      });
-
-    }
+    new adBox(sails.config.adBox.token, sails.config.adBox).req({
+      path: '/user/login',
+      method: 'POST',
+      data: {
+        email: email,
+        password: password
+      },
+      headers: { 'Content-Type': 'application/json' }
+    }, requireAuth).then(function(data) {
+      if (data) {
+        // data.user.email = data.user.email.value;
+        deferred.resolve(data);
+      } else {
+        sails.log.error(arguments);
+          deferred.reject({ message: 'Internal Server error' });
+      }
+    }, function(err) {
+      sails.log.error(err);
+      deferred.reject(err);
+    });
 
     return deferred;
 
