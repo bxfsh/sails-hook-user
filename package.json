@@ -1,5 +1,5 @@
 {
-  "name": "@boxfish/sails-hook-users",
+  "name": "@boxfish/sails-hook-user",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,5 +10,5 @@
   "license": "ISC",
   "sails": {
     "isHook": true
-  },
+  }
 }
