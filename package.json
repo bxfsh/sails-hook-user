@@ -1,0 +1,14 @@
+{
+  "name": "@username/sails-hook-users",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel Oliveira <daniel@boxfish.com> (https://boxfish.com)",
+  "license": "ISC",
+  "sails": {
+    "isHook": true
+  },
+}

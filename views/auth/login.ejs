@@ -1,0 +1,34 @@
+<div class="login-form  <% if (typeof message === 'undefined'){%>animated fadeIn<%}%>">
+  <!-- Login -->
+  <i class="icon-boxfish text-center" id="login-logo"></i>
+  <p id="cerebro">CEREBRO</p>
+
+  <form
+    method="post"
+    action="/login"
+    class="form <% if (typeof message !== 'undefined'){%>animation_shake<%}%>"
+    autocomplete="false">
+
+    <%if ( typeof message !== 'undefined' ) {%>
+      <div class="alert alert-danger" role="alert"> <i class="icon-warning"></i> <%= message %></div>
+    <%}%>
+
+    <input type="hidden" name="target" value="<%= typeof target !== 'undefined' ? target : '' %>"/>
+
+    <div class="auth-inputs">
+      <div class="input-group">
+        <input type="text" id="name" name="email" autocomplete="false" placeholder="Email Address" required>
+      </div>
+      <div class="input-group">
+        <input type="password" id="password" autocomplete="false" name="password" placeholder="Password" required>
+      </div>
+    </div>
+
+    <div class="padding-1em">
+      <a href="/request_password_reset">Forgot Password?</a>
+    </div>
+
+    <input type="submit" value="Login" />
+
+  </form>
+</div>

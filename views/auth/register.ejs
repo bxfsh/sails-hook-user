@@ -1,0 +1,56 @@
+<div class="login-form" id="register">
+
+  <i class="icon-boxfish text-center" id="login-logo"></i>
+  <p id="cerebro">CEREBRO</p>
+
+  <form method="post" action="/register" class="form" autocomplete="false">
+
+    <%if ( typeof message !== 'undefined' ) {%>
+      <div class="alert alert-danger" role="alert"> <i class="icon-warning"></i> <%= message %></div>
+    <%}%>
+
+    <input type="hidden" name="target" value="<%= typeof target !== 'undefined' ? target : '' %>"/>
+
+    <div class="auth-inputs">
+      <div class="input-group">
+        <label class="hidden-xs">First Name</label>
+        <input type="text" name="firstName" placeholder="First Name" required>
+      </div>
+
+      <div class="input-group">
+        <label class="hidden-xs">Last Name</label>
+        <input type="text" name="lastName" placeholder="Last Name" required>
+      </div>
+
+      <div class="input-group">
+        <label class="hidden-xs">Email Address</label>
+        <input type="email" name="email" placeholder="Email Address" required>
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="input-group">
+        <label class="hidden-xs">Password</label>
+        <input
+          type="password"
+          pattern=".{6,}"
+          title="Password must be at least 6 characters"
+          name="password"
+          placeholder="Password"
+          required>
+      </div>
+
+      <div class="input-group">
+        <label class="hidden-xs">Confirm Password</label>
+        <input
+          type="password"
+          name="confirm-password"
+          placeholder="Confirm Password"
+          required>
+      </div>
+    </div>
+
+    <input type="submit" value="Register">
+
+  </form>
+
+</div>
