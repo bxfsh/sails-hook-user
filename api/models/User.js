@@ -131,7 +131,7 @@ module.exports = {
       var url = req.protocol + '://' + req.host + '/auth/resetPassword?token=' + token + '&email=' + email;
 
       // rendering the template
-      var file = require('fs').readFileSync('views/emailTemplates/general.ejs', 'utf-8');
+      var file = require('fs').readFileSync(__dirname + '/views/email/general.ejs', 'utf-8');
       var template = require('ejs').render(file, {
         title: 'Password Update Request',
         body: 'You have forgotten your password.',
