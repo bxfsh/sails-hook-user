@@ -135,7 +135,9 @@ module.exports = {
       var url = req.protocol + '://' + req.host + '/auth/resetPassword?token=' + token + '&email=' + email;
 
       // rendering the template
-      var file = require('fs').readFileSync(__dirname + '/views/email/general.ejs', 'utf-8');
+      console.log(__dirname + '/../views/email/general.ejs');
+
+      var file = require('fs').readFileSync(__dirname + '/../views/email/general.ejs', 'utf-8');
 
       console.log('requestResetPassword time to send the email'.green);
 
