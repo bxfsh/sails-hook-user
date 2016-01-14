@@ -203,13 +203,11 @@ module.exports = function (sails) {
 
           // TODO: check token and update password
           User.requestResetPassword(req.param('email'), req).then(function() {
-            console.log(arguments);
             return res.view(_getViewRoute('request_password_success'), {
               title: 'Request New Password',
               message: 'Invalid Email Address.'
             });
           }, function() {
-            console.log(arguments);
             return res.serverError(arguments);
           });
 

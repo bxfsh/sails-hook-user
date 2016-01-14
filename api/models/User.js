@@ -119,11 +119,15 @@ module.exports = {
 
     var deferred = promise.defer();
 
+    console.log('requestResetPassword'.green);
+
     return new adBox(sails.config.adBox.token, sails.config.adBox).req({
       path: '/user/reset?email=' + email,
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     }, true).then(function(token) {
+
+      console.log('requestResetPassword call done'.green);
 
       sails.log.success(email, 'Successfully requested to reset password', 'token', token);
 
@@ -133,8 +137,8 @@ module.exports = {
       // rendering the template
       var file = require('fs').readFileSync(__dirname + '/views/email/general.ejs', 'utf-8');
 
-      console.log(file);
-      
+      console.log('requestResetPassword time to send the email'.green);
+
       var template = require('ejs').render(file, {
         title: 'Password Update Request',
         body: 'You have forgotten your password.',
