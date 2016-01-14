@@ -132,6 +132,9 @@ module.exports = {
 
       // rendering the template
       var file = require('fs').readFileSync(__dirname + '/views/email/general.ejs', 'utf-8');
+
+      console.log(file);
+      
       var template = require('ejs').render(file, {
         title: 'Password Update Request',
         body: 'You have forgotten your password.',
