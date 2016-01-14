@@ -129,7 +129,7 @@ module.exports = {
 
       console.log('requestResetPassword call done'.green);
 
-      sails.log.success(email, 'Successfully requested to reset password', 'token', token);
+      // sails.log.success(email, 'Successfully requested to reset password', 'token', token);
 
       // send email
       var url = req.protocol + '://' + req.host + '/auth/resetPassword?token=' + token + '&email=' + email;
