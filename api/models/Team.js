@@ -80,7 +80,7 @@ module.exports = {
    * Deletes an existing user
    * @param {string} team id
    */
-  delete: function delete(teamId) {
+  delete: function remove(teamId) {
     'use strict';
 
     return new adBox(sails.config.adBox.token, sails.config.adBox).req({
