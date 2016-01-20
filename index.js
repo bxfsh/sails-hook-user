@@ -1,6 +1,7 @@
 var colors = require('colors');
 var extend = require('deep-extend');
-var User = require('./api/models/user.js');
+var User = require('./api/models/User.js');
+var Team = require('./api/models/Team.js');
 
 /**
  * Get the local route path
@@ -271,6 +272,11 @@ module.exports = function (sails) {
             });
 
           });
+
+        }
+
+        // TEAMS SECTION
+        'POST /team/create': function(req, res) {
 
         }
 

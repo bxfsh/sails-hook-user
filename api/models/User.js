@@ -98,7 +98,7 @@ module.exports = {
     'use strict';
 
     return new adBox(sails.config.adBox.token, sails.config.adBox).req({
-      path: '/user/create',
+      path: '/user/register',
       method: 'POST',
       data: user,
       headers: { 'Content-Type': 'application/json' }
