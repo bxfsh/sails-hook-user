@@ -273,7 +273,7 @@ module.exports = function (sails) {
 
           });
 
-        }
+        },
 
         // TEAMS SECTION
         'POST /team/create': function(req, res) {
