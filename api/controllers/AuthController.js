@@ -172,7 +172,7 @@ module.exports = {
 
     // validate email
     if (!regExp.test(req.param('email'))) {
-      return res.view(_getViewRoute('request_password_reset'), {
+      return res.view(_getViewRoute('auth/request_password_reset'), {
         title: 'Request New Password',
         message: 'Invalid Email Address.'
       });
@@ -180,7 +180,7 @@ module.exports = {
 
     // TODO: check token and update password
     User.requestResetPassword(req.param('email'), req).then(function() {
-      return res.view(_getViewRoute('request_password_success'), {
+      return res.view(_getViewRoute('auth/request_password_success'), {
         title: 'Request New Password',
         message: 'Invalid Email Address.'
       });
@@ -240,7 +240,7 @@ module.exports = {
 
     }, function(message) {
 
-      return res.view(_getViewRoute('reset_password'), {
+      return res.view(_getViewRoute('auth/reset_password'), {
         title: 'Reset Password',
         message: message,
         token: token,
