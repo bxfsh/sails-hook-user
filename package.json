@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "boxfish-router": "^1.0.3",
+    "ejs": "^2.3.4",
     "promised-io": "^0.3.5"
   }
 }
