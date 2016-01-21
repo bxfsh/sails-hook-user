@@ -1,3 +1,5 @@
+var colors = require('colors');
+var extend = require('deep-extend');
 var User = require('./../models/User.js');
 
 /**

@@ -1,4 +1,5 @@
-
+var colors = require('colors');
+var extend = require('deep-extend');
 var Team = require('./../models/Team.js');
 
 /**
