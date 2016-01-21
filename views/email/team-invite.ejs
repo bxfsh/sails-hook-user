@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>email_min.html</title>
+
+<style type="text/css">
+	@import url(https://fonts.googleapis.com/css?family=Lato);
+
+	html, body {font-family:'Lato',Helvetica,sans-serif;font-size:0.9em;font-weight:400;background-color:#f4f4f7;font-size:16px;line-height:1.65;}
+
+  /* reset */
+  #outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
+  .ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
+  .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Forces Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
+
+	p { color: #8092AC; }
+	p.small {font-size: 0.9em;}
+	p, a { line-height: 1.65;}
+	a { text-decoration:none }
+	a.reset-link:hover { background:#27ae60!important}
+	a:hover { text-decoration: underline;}
+	strong {color:#444444;}
+  table td {border-collapse: collapse;padding:0.5em 2em;} /* Outlook 07, 10 padding issue fix */
+  table {border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; } /* remove spacing around Outlook 07, 10 tables */
+
+  /* bring inline */
+  img {display: block; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;}
+  a img {border: none;}
+  a.phone {text-decoration: none; color: #000001 !important; pointer-events: auto; cursor: default;} /* phone link, use as wrapper on phone numbers */
+  span {font-size: 13px; line-height: 17px; font-family: Helvetica; color: #000001;}
+</style>
+
+</head>
+<body style="width:100%; margin:0; padding:0;color: #333;font-size: 0.9em;-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;background-color:#f4f4f7">
+
+<!-- body wrapper -->
+<table cellpadding="0" cellspacing="0" border="0" style="margin:0; padding:0; width:100%; line-height: 100% !important;">
+  <tbody><tr>
+    <td valign="top">
+      <!-- edge wrapper -->
+      <table cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="background: #f4f4f7;">
+        <tbody><tr>
+          <td valign="top">
+            <!-- content wrapper -->
+            <table cellpadding="0" cellspacing="0" border="0" align="center" width="560" style="">
+              <tbody><tr>
+                <td valign="top" style="vertical-align: top;">
+<!-- ///////////////////////////////////////////////////// -->
+
+<table cellpadding="0" cellspacing="0" border="0" align="center">
+  <tbody><tr>
+    <td valign="top" style="vertical-align: top;">
+      <img style="margin:1.5em 0;" src="https://s3.amazonaws.com/cdn.boxfish.com/logos/boxfish-blue@2x.png" width="130" alt="Boxfish">
+    </td>
+  </tr>
+</tbody></table>
+<table cellpadding="0" cellspacing="0" border="0" style="
+    background: white;border-radius:4px;" width="100%;">
+  <tbody>
+		<tr>
+	    <td valign="top" style="vertical-align: top;padding:2em;">
+				<p>Hi Mark,</p>
+		    <p>
+					<strong>Kevin</strong> has invited you to join <strong>Boxfish</strong> on Boxfish Cerebro.
+					Please click the link below accept this invitation.
+				</p>
+			</td>
+		</tr>
+
+		<tr style="
+			background:#F9F9FD;
+			border-top:1px solid #EEEEEE;
+			border-bottom:1px solid #EEEEEE;
+		">
+			<td style="padding:2em;" align="center">
+				<a href="https://cerebro.boxfish.com/register?inviteToken=<%= token %>" class="reset-link" style="
+				    display: inline-block;
+				    background: #2ecc71;
+				    padding: 1em 3.5em;
+				    border-radius: 30px;
+				    color:  white;
+						font-size: 1em;
+						text-transform: uppercase;
+						text-align: center;
+				">Join <%= team %> on Cerebro</a>
+			</td>
+		</tr>
+
+		<tr>
+			<td valign="top" style="vertical-align: top;" align="center">
+				<p class="small" style="text-align: center;">
+					Boxfish Cerebro enables marketers to identify, reach and target a TV audience -  at scale - on digital.
+				</p>
+			</td>
+		</tr>
+
+</tbody></table>
+<table cellpadding="0" cellspacing="0" border="0" align="center">
+  <tbody>
+		<tr>
+			<td align="center" style="padding:2em 0 0;">
+				<a href="https://boxfish.com" style="color:#6696dc;">www.boxfish.com</a>
+			</td>
+		</tr>
+		<tr valign="center">
+    	<td valign="top" style="vertical-align: top;color:#B3BDCC;text-align:center;padding:2em;font-size:0.9em;border-radius:0 0 3px 3px" width="600">Boxfish 2016 &copy; All Rights Reserved. </td>
+  	</tr>
+</tbody></table>
+
+<!-- //////////// -->
+                </td>
+              </tr>
+            </tbody></table>
+            <!-- / content wrapper -->
+          </td>
+        </tr>
+      </tbody></table>
+      <!-- / edge wrapper -->
+    </td>
+  </tr>
+</tbody></table>
+<!-- / page wrapper -->
+
+
+</body></html>
