@@ -118,8 +118,10 @@ module.exports = {
   requestResetPassword: function requestResetPassword(email, req) {
 
     var deferred = promise.defer();
+    var template = __dirname + '/../../views/email/reset-password.ejs';
+    var fs = require('fs');
 
-    console.log('requestResetPassword'.green);
+    sails.log.debug('[requestResetPassword] Starting'.green);
 
     return new adBox(sails.config.adBox.token, sails.config.adBox).req({
       path: '/user/reset?email=' + email,
@@ -127,38 +129,41 @@ module.exports = {
       headers: { 'Content-Type': 'application/json' }
     }, true).then(function(token) {
 
-      console.log('requestResetPassword call done'.green);
-
-      // sails.log.success(email, 'Successfully requested to reset password', 'token', token);
+      sails.log.debug('[requestResetPassword] Request Complete'.green);
+      sails.log.debug('[requestResetPassword] Reading Template'.green);
 
       // send email
       var url = req.protocol + '://' + req.host + '/resetPassword?token=' + token + '&email=' + email;
 
-      // rendering the template
-      console.log(__dirname + '/../../views/email/general.ejs');
+      fs.readFile(template, 'utf8', function(err, file) {
 
-      var file = require('fs').readFileSync(__dirname + '/../../views/email/general.ejs', 'utf-8');
+        sails.log.debug('[requestResetPassword] File Read Complete'.green);
 
-      console.log('requestResetPassword time to send the email'.green);
+        var html = require('ejs').render(file, {
+          title: 'Password Update Request',
+          link: url
+        });
 
-      var template = require('ejs').render(file, {
-        title: 'Password Update Request',
-        body: 'You have forgotten your password.',
-        link: url,
-        buttonText: 'Click here to Update'
+        sails.log.debug('[requestResetPassword] Sending Email'.green);
+
+        sails.hooks.email.send(
+          'services@boxfish.com',
+          [email],
+          'Password Reset Request',
+          null,
+          html,
+          function(err) {
+            if (err) {
+              sails.log.warn('[requestResetPassword] Error Sending Email'.red, err);
+              deferred.reject(err);
+            }
+            else {
+              sails.log.debug('[requestResetPassword] Successfully Sent Email'.green);
+              deferred.resolve(true);
+            }
+          }
+        );
       });
-
-      sails.hooks.email.send(
-        'services@bofish.com',
-        [email],
-        'Password Reset Request',
-        null,
-        template,
-        function(err) {
-          if (err) deferred.reject(err);
-          else deferred.resolve(true);
-        }
-      );
 
     }, deferred.reject);
 
@@ -168,11 +173,11 @@ module.exports = {
 
   /**
    * Resets the user password
-   * @param  {[type]} email       [description]
-   * @param  {[type]} token       [description]
-   * @param  {[type]} pass        [description]
-   * @param  {[type]} confirmPass [description]
-   * @return {[type]}             [description]
+   * @param  {String} email
+   * @param  {String} token
+   * @param  {String} pass
+   * @param  {String} confirmPass
+   * @return {Promise} Returns promise
    */
   resetPassword: function resetPassword(email, token, pass, confirmPass) {
 
