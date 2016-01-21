@@ -1,6 +1,6 @@
 /* global Team:true */
 var promise       = require('promised-io/promise');
-var adBox         = require('boxfish-router');
+var AdBox         = require('boxfish-router');
 var colors        = require('colors');
 
 /**
@@ -12,17 +12,56 @@ var colors        = require('colors');
 module.exports = {
 
   /**
-   * Creates a new team
+   * make a request to the keywords Service
+   * @param  {Object} user [(required) the user]
+   * @param  {String} path [(required) the url]
+   * @param  {String} method [(required) request method]
+   * @param  {Object} data
+   * @return {Promise} Returns a new promise
    */
-  create: function create(data) {
+  _serviceRequest: function _serviceRequest(user, path, method, data, headers) {
+
     'use strict';
 
-    return new adBox(sails.config.adBox.token, sails.config.adBox).req({
-      path: '/team/create',
-      method: 'POST',
+    if (!user) {
+      throw 'You cannot make a request without a user';
+    } else {
+      if (!user.token) {
+        throw 'Missing token in user object';
+      }
+      if (!user.teamId) {
+        throw 'Missing teamId in user object';
+      }
+    }
+
+    // sails.log.debug('--------'.green);
+    // sails.log.debug('Audience.js model: MAKING REQUEST'.green);
+    // sails.log.debug(sails.config.adBox.token.blue);
+    // sails.log.debug(sails.config.adBox.host.blue);
+    // sails.log.debug(sails.config.adBox.port.toString().blue);
+
+    return new AdBox(user.token, sails.config.adBox).req({
+      path: '/' + path,
+      method: method,
       data: data,
-      headers: { 'Content-Type': 'application/json' }
-    }, true);
+      headers: headers
+    });
+
+  },
+
+  /**
+   * Creates a new team
+   */
+  create: function create(user, data) {
+    'use strict';
+
+    return this._serviceRequest(
+      user,
+      '/team/create',
+      'GET',
+      data,
+      { 'Content-Type' : 'application/json' });
+
   },
 
   /**
@@ -65,15 +104,16 @@ module.exports = {
    * Search
    * @param {Object} search query
    */
-  find: function find(query) {
+  find: function find(user, query) {
     'use strict';
 
-    return new adBox(sails.config.adBox.token, sails.config.adBox).req({
-      path: '/team/find',
-      method: 'GET',
-      data: query,
-      headers: { 'Content-Type': 'application/json' }
-    }, true);
+    return this._serviceRequest(
+      user,
+      'team/find',
+      'GET',
+      query,
+      { 'Content-Type' : 'application/json' });
+
   },
 
   /**
@@ -122,7 +162,7 @@ module.exports = {
     // TODO: get team by id
     // TODO: update the list of users in the team
     // OR
-    // TODO: chris will provide an endpoint for it
+    // TODO: chris will provide an easy endpoint for it
   },
 
   /**
