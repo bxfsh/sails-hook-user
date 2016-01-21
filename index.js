@@ -34,10 +34,8 @@ module.exports = function (sails) {
         'GET /request_password_reset':    AuthController['GET /request_password_reset'],
         'POST /request_password_reset':   AuthController['POST /request_password_reset'],
         'GET /resetPassword':             AuthController['GET /resetPassword'],
-        'POST /resetPassword':            AuthController['POST /resetPassword'],
+        'POST /resetPassword':            AuthController['POST /resetPassword']
 
-        // Teams Routes
-        'GET /teams':                     TeamController.index
       },
       before: {
 
