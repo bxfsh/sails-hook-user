@@ -1,6 +1,5 @@
 var colors = require('colors');
 var extend = require('deep-extend');
-var TeamController = require('./api/controllers/TeamController.js');
 var AuthController = require('./api/controllers/AuthController.js');
 
 module.exports = function (sails) {
