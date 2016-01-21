@@ -21,26 +21,23 @@ module.exports = function (sails) {
     configure: function() {
     },
 
-    // ROUTES
-
     routes: {
       after: {
 
         // Auth and User routes
-        'GET /register': AuthController['GET /register'],
-        'POST /register': AuthController['POST /register'],
-        'GET /login': AuthController['GET /login'],
-        'POST /login': AuthController['POST /login'],
-        'GET /logout': AuthController['GET /logout'],
-        'POST /logout': AuthController['POST /logout'],
-        'GET /request_password_reset': AuthController['GET /request_password_reset'],
-        'POST /request_password_reset': AuthController['POST /request_password_reset'],
-        'GET /resetPassword': AuthController['GET /resetPassword'],
-        'POST /resetPassword': AuthController['POST /resetPassword'],
+        'GET /register':                  AuthController['GET /register'],
+        'POST /register':                 AuthController['POST /register'],
+        'GET /login':                     AuthController['GET /login'],
+        'POST /login':                    AuthController['POST /login'],
+        'GET /logout':                    AuthController['GET /logout'],
+        'POST /logout':                   AuthController['POST /logout'],
+        'GET /request_password_reset':    AuthController['GET /request_password_reset'],
+        'POST /request_password_reset':   AuthController['POST /request_password_reset'],
+        'GET /resetPassword':             AuthController['GET /resetPassword'],
+        'POST /resetPassword':            AuthController['POST /resetPassword'],
 
         // Teams Routes
-        'GET /teams': TeamController.index
-
+        'GET /teams':                     TeamController.index
       },
       before: {
 

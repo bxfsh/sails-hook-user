@@ -6,7 +6,7 @@ var Team = require('./../models/Team.js');
  * Get the local route path
  */
 var _getViewRoute = function _getViewRoute(name) {
-  return __dirname + '/../views/' + name + '.ejs';
+  return __dirname + '/../../views/' + name + '.ejs';
 };
 
 module.exports = {
