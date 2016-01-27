@@ -16,7 +16,14 @@ module.exports = {
    */
   'GET /register': function (req, res, next) {
     'use strict';
-    return res.view(_getViewRoute('auth/register'), { title: 'Register' });
+    
+    // InviteToken & email should be present when coming from email invite
+    
+    return res.view(_getViewRoute('auth/register'), { 
+      title: 'Register' 
+      inviteToken: req.param('inviteToken') || '',
+      email: req.param('email') || ''
+    });
   },
 
   /**
@@ -24,8 +31,19 @@ module.exports = {
    */
   'POST /register': function (req, res, next) {
     'use strict';
+    
+    var params = req.params.all();
+    
+    params.title = 'Register';
+    
+    if (!req.param('inviteToken')) {
+      params.message = '\'You must have an invite token to join Cerebro.\'';
+      return res.view(_getViewRoute('register'), params);
+    }
+    
     if ( req.param('password') !== req.param('confirm-password') ) {
-      return res.view(_getViewRoute('register'), { message : 'Passwords do not match', title: 'Register' });
+      params.message = 'Passwords do not match';
+      return res.view(_getViewRoute('register'), params);
     }
 
     var user = {
@@ -33,6 +51,7 @@ module.exports = {
       password    : req.param('password'),
       firstName   : req.param('firstName'),
       lastName    : req.param('lastName'),
+      inviteToken : req.param('inviteToken'),
       avatar      : 'THUMB',
       jobTitle    : 'Ad Ops'
     };
