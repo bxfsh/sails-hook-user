@@ -25,7 +25,7 @@ module.exports = {
   'POST /register': function (req, res, next) {
     'use strict';
     if ( req.param('password') !== req.param('confirm-password') ) {
-      return res.view(_getViewRoute('register'), { message : 'Passwords do not match', title: 'Register' });
+      return res.view(_getViewRoute('auth/register'), { message : 'Passwords do not match', title: 'Register' });
     }
 
     var user = {
@@ -52,7 +52,7 @@ module.exports = {
       return res.redirect('/');
     }, function(err) {
       sails.log.error('ERROR -------->'.red, err);
-      return res.view(_getViewRoute('register'), { message : err.messages[0], title: 'Register' });
+      return res.view(_getViewRoute('auth/register'), { message : err.messages[0], title: 'Register' });
     });
   },
 
@@ -113,7 +113,7 @@ module.exports = {
 
       sails.log.debug(new Date(), 'ATTEMPTED USER LOGIN:', error);
       res.status(403);
-      return res.view(_getViewRoute('login'),
+      return res.view(_getViewRoute('auth/login'),
         {
           message: 'Incorrect Username or Password',
           title: 'Login',
