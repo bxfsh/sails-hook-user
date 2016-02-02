@@ -16,11 +16,11 @@ module.exports = {
    */
   'GET /register': function (req, res, next) {
     'use strict';
-    
+
     // InviteToken & email should be present when coming from email invite
-    
-    return res.view(_getViewRoute('auth/register'), { 
-      title: 'Register' 
+
+    return res.view(_getViewRoute('auth/register'), {
+      title: 'Register'
       inviteToken: req.param('inviteToken') || '',
       email: req.param('email') || ''
     });
@@ -31,16 +31,16 @@ module.exports = {
    */
   'POST /register': function (req, res, next) {
     'use strict';
-    
+
     var params = req.params.all();
-    
+
     params.title = 'Register';
-    
+
     if (!req.param('inviteToken')) {
       params.message = '\'You must have an invite token to join Cerebro.\'';
       return res.view(_getViewRoute('register'), params);
     }
-    
+
     if ( req.param('password') !== req.param('confirm-password') ) {
       params.message = 'Passwords do not match';
       return res.view(_getViewRoute('register'), params);
@@ -71,7 +71,7 @@ module.exports = {
       return res.redirect('/');
     }, function(err) {
       sails.log.error('ERROR -------->'.red, err);
-      return res.view(_getViewRoute('register'), { message : err.messages[0], title: 'Register' });
+      return res.view(_getViewRoute('auth/register'), { message : err.messages[0], title: 'Register' });
     });
   },
 
@@ -132,7 +132,7 @@ module.exports = {
 
       sails.log.debug(new Date(), 'ATTEMPTED USER LOGIN:', error);
       res.status(403);
-      return res.view(_getViewRoute('login'),
+      return res.view(_getViewRoute('auth/login'),
         {
           message: 'Incorrect Username or Password',
           title: 'Login',
