@@ -1,0 +1,19 @@
+{
+  "name": "@bxfsh/sails-hook-user",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel Oliveira <daniel@boxfish.com> (https://boxfish.com)",
+  "license": "ISC",
+  "sails": {
+    "isHook": true
+  },
+  "dependencies": {
+    "boxfish-router": "^1.0.3",
+    "ejs": "^2.3.4",
+    "promised-io": "^0.3.5"
+  }
+}
