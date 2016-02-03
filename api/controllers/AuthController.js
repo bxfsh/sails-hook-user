@@ -36,14 +36,16 @@ module.exports = {
 
     params.title = 'Register';
 
+    params.email = params.email || '';
+
     if (!req.param('inviteToken')) {
       params.message = '\'You must have an invite token to join Cerebro.\'';
-      return res.view(_getViewRoute('register'), params);
+      return res.view(_getViewRoute('auth/register'), params);
     }
 
     if ( req.param('password') !== req.param('confirm-password') ) {
       params.message = 'Passwords do not match';
-      return res.view(_getViewRoute('register'), params);
+      return res.view(_getViewRoute('auth/register'), params);
     }
 
     var user = {
@@ -69,9 +71,21 @@ module.exports = {
 
       req.session.user = data;
       return res.redirect('/');
+
     }, function(err) {
+
       sails.log.error('ERROR -------->'.red, err);
-      return res.view(_getViewRoute('auth/register'), { message : err.messages[0], title: 'Register' });
+
+      // if (err.messages[0].indexOf('nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement')){
+      //   return res.redirect('/login');
+      // }
+
+      return res.view(_getViewRoute('auth/register'), {
+        message : err.messages[0],
+        title: 'Register',
+        email: req.param('email') || ''
+       });
+
     });
   },
 
