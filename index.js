@@ -20,6 +20,8 @@ module.exports = function (sails) {
     configure: function() {
     },
 
+    model: require('./api/models/User.js'),
+
     routes: {
       after: {
 
