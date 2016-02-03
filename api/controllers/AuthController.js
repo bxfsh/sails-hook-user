@@ -20,7 +20,7 @@ module.exports = {
     // InviteToken & email should be present when coming from email invite
 
     return res.view(_getViewRoute('auth/register'), {
-      title: 'Register'
+      title: 'Register',
       inviteToken: req.param('inviteToken') || '',
       email: req.param('email') || ''
     });
@@ -51,9 +51,9 @@ module.exports = {
       password    : req.param('password'),
       firstName   : req.param('firstName'),
       lastName    : req.param('lastName'),
-      inviteToken : req.param('inviteToken'),
-      avatar      : 'THUMB',
-      jobTitle    : 'Ad Ops'
+      inviteToken : req.param('inviteToken')
+      // avatar      : 'THUMB',
+      // company    : 'Ad Ops'
     };
 
     // Creates the client with the API

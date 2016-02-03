@@ -22,10 +22,17 @@
         <input type="text" name="lastName" placeholder="Last Name" required>
       </div>
 
+      <% if (typeof req.param('email') !== 'undefined') { %>
+      <div class="input-group">
+        <label class="hidden-xs">Email Address</label>
+        <input type="email" name="email" value="<%= req.param('email')%>" disabled>
+      </div>
+      <% } else {%>
       <div class="input-group">
         <label class="hidden-xs">Email Address</label>
         <input type="email" name="email" placeholder="Email Address" required>
       </div>
+      <%}%>
 
       <!-- PASSWORD -->
       <div class="input-group">
