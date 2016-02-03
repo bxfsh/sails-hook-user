@@ -89,6 +89,19 @@ module.exports = {
   },
 
   /**
+   * Find an user by email
+   */
+  findByEmail: function findByEmail(email) {
+
+    return new adBox(sails.config.adBox.token, sails.config.adBox).req({
+      path: '/user/find?email=' + email,
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    }, true);
+
+  },
+
+  /**
    * Try to create a new user
    * @param  {[type]}   user
    * @param  {Function} callback
@@ -96,6 +109,8 @@ module.exports = {
   create: function create(user) {
 
     'use strict';
+
+    sails.log.debug('Creating User', user);
 
     return new adBox(sails.config.adBox.token, sails.config.adBox).req({
       path: '/user/register',

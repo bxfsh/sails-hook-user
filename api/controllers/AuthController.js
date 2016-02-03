@@ -20,7 +20,7 @@ module.exports = {
     // InviteToken & email should be present when coming from email invite
 
     return res.view(_getViewRoute('auth/register'), {
-      title: 'Register'
+      title: 'Register',
       inviteToken: req.param('inviteToken') || '',
       email: req.param('email') || ''
     });
@@ -36,14 +36,16 @@ module.exports = {
 
     params.title = 'Register';
 
+    params.email = params.email || '';
+
     if (!req.param('inviteToken')) {
       params.message = '\'You must have an invite token to join Cerebro.\'';
-      return res.view(_getViewRoute('register'), params);
+      return res.view(_getViewRoute('auth/register'), params);
     }
 
     if ( req.param('password') !== req.param('confirm-password') ) {
       params.message = 'Passwords do not match';
-      return res.view(_getViewRoute('register'), params);
+      return res.view(_getViewRoute('auth/register'), params);
     }
 
     var user = {
@@ -51,9 +53,9 @@ module.exports = {
       password    : req.param('password'),
       firstName   : req.param('firstName'),
       lastName    : req.param('lastName'),
-      inviteToken : req.param('inviteToken'),
-      avatar      : 'THUMB',
-      jobTitle    : 'Ad Ops'
+      inviteToken : req.param('inviteToken')
+      // avatar      : 'THUMB',
+      // company    : 'Ad Ops'
     };
 
     // Creates the client with the API
@@ -69,9 +71,21 @@ module.exports = {
 
       req.session.user = data;
       return res.redirect('/');
+
     }, function(err) {
+
       sails.log.error('ERROR -------->'.red, err);
-      return res.view(_getViewRoute('auth/register'), { message : err.messages[0], title: 'Register' });
+
+      // if (err.messages[0].indexOf('nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement')){
+      //   return res.redirect('/login');
+      // }
+
+      return res.view(_getViewRoute('auth/register'), {
+        message : err.messages[0],
+        title: 'Register',
+        email: req.param('email') || ''
+       });
+
     });
   },
 
