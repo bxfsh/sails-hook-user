@@ -9,6 +9,36 @@ var _getViewRoute = function _getViewRoute(name) {
   return __dirname + '/../../views/' + name + '.ejs';
 };
 
+/**
+ * to be called everytime the login is successfull
+ */
+var _onLoginSuccess = function _onLoginSuccess(req, res, data, target) {
+
+  sails.log.info('User has just logged in'.green, data);
+
+  res.status(200);
+  delete data.password;
+  req.session.user = extend(data.user, { token: data.token });
+  req.session.authenticated = true;
+
+  // setting the team id in the user object
+  if (data.user.teams.length > 0) {
+    if (data.user.teams.length === 1) {
+      req.session.user.teamId = data.user.teams[0].id;
+    } else {
+      req.session.user.teamId = data.user.teams.filter(function(i) {
+        return !/boxfish/ig.test(i.name) ? i : null;
+      })[0].id;
+    }
+  }
+
+  sails.log.debug('User has just mapped out'.green, req.session.user);
+  sails.log.debug(new Date(), 'redirect to', target);
+
+  return res.redirect(target);
+
+};
+
 module.exports = {
 
   /**
@@ -61,16 +91,24 @@ module.exports = {
     // Creates the client with the API
     User.create(user).then(function(data) {
 
-      // NOTE: we want to avoid putting the users password in the session
-      if ( data.hasOwnProperty('password') ) {
-        delete data.password;
-      }
+      // then we attempt to login
+      // we need to login again to get the token for future API transactions
+      User.login(email, pass).then(function(data) {
 
-      user.password = null;
-      delete user.password;
+        return _onLoginSuccess(req, res, data, '/');
 
-      req.session.user = data;
-      return res.redirect('/');
+      }, function(error) {
+
+        sails.log.debug(new Date(), 'ATTEMPTED USER LOGIN:', error);
+        res.status(403);
+        return res.view(_getViewRoute('auth/login'),
+          {
+            message: 'Incorrect Username or Password',
+            title: 'Login',
+            target: target
+          });
+
+      });
 
     }, function(err) {
 
@@ -119,28 +157,7 @@ module.exports = {
     // authenticate the user
     User.login(email, pass).then(function(data) {
 
-      sails.log.info('User has just logged in'.green, data);
-
-      res.status(200);
-      delete data.password;
-      req.session.user = extend(data.user, { token: data.token });
-      req.session.authenticated = true;
-
-      // setting the team id in the user object
-      if (data.user.teams.length > 0) {
-        if (data.user.teams.length === 1) {
-          req.session.user.teamId = data.user.teams[0].id;
-        } else {
-          req.session.user.teamId = data.user.teams.filter(function(i) {
-            return !/boxfish/ig.test(i.name) ? i : null;
-          })[0].id;
-        }
-      }
-
-      sails.log.debug('User has just mapped out'.green, req.session.user);
-      sails.log.debug(new Date(), 'redirect to', target);
-
-      return res.redirect(target);
+      return _onLoginSuccess(req, res, data, target);
 
     }, function(error) {
 
