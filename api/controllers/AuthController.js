@@ -84,8 +84,6 @@ module.exports = {
       firstName   : req.param('firstName'),
       lastName    : req.param('lastName'),
       inviteToken : req.param('inviteToken')
-      // avatar      : 'THUMB',
-      // company    : 'Ad Ops'
     };
 
     // Creates the client with the API
@@ -93,9 +91,9 @@ module.exports = {
 
       // then we attempt to login
       // we need to login again to get the token for future API transactions
-      User.login(email, pass).then(function(data) {
+      User.login(req.param('email'), req.param('password')).then(function(data) {
 
-        return _onLoginSuccess(req, res, data, '/');
+        return _onLoginSuccess(req, res, data, params.target || '/');
 
       }, function(error) {
 

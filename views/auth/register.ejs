@@ -49,7 +49,7 @@
       </div>
     </div>
 
-    <input type="hidden" name="inviteToken" value="<%= inviteToken %>">
+    <input type="hidden" name="inviteToken" value="<%= typeof inviteToken !== 'undefined' ? inviteToken : ''  %>">
 
     <input type="submit" value="Register">
 
