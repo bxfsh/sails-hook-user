@@ -160,6 +160,7 @@ module.exports = {
     }, function(error) {
 
       sails.log.debug(new Date(), 'ATTEMPTED USER LOGIN:', error);
+      // return res.redirect(req.url + '?' + require('querystring').stringify(req.allParams()));
       res.status(403);
       return res.view(_getViewRoute('auth/login'),
         {

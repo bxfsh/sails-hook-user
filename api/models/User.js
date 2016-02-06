@@ -72,6 +72,14 @@ module.exports = {
       },
       headers: { 'Content-Type': 'application/json' }
     }, requireAuth).then(function(data) {
+
+      console.log(data);
+
+      if (data.user == null) {
+        deferred.reject('Wrong Credentials');
+        return;
+      }
+
       if (data) {
         // data.user.email = data.user.email.value;
         deferred.resolve(data);
@@ -79,6 +87,7 @@ module.exports = {
         sails.log.error(arguments);
           deferred.reject({ message: 'Internal Server error' });
       }
+
     }, function(err) {
       sails.log.error(err);
       deferred.reject(err);
