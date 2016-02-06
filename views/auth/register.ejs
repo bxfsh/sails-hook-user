@@ -14,17 +14,17 @@
     <div class="auth-inputs">
       <div class="input-group">
         <label class="hidden-xs">First Name</label>
-        <input type="text" value="<%= firstName %>" name="firstName" placeholder="First Name" required>
+        <input type="text" name="firstName" placeholder="First Name" required>
       </div>
 
       <div class="input-group">
         <label class="hidden-xs">Last Name</label>
-        <input type="text" value="<%= lastName %>" name="lastName" placeholder="Last Name" required>
+        <input type="text" name="lastName" placeholder="Last Name" required>
       </div>
 
       <div class="input-group">
         <label class="hidden-xs">Email Address</label>
-        <input type="email" value="<%= email %>" name="email" placeholder="Email Address" required>
+        <input type="email" value="<%= typeof email !== 'undefined' ? email : '' %>" name="email" placeholder="Email Address" required>
       </div>
 
       <!-- PASSWORD -->
@@ -48,7 +48,7 @@
           required>
       </div>
     </div>
-    
+
     <input type="hidden" name="inviteToken" value="<%= inviteToken %>">
 
     <input type="submit" value="Register">
