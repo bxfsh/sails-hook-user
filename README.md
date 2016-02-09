@@ -82,3 +82,9 @@ module.exports.views = {
 
 };
 ```
+
+* 3) Style
+
+By default this hook does not generate any css, but do style it you only need to create a css file called login.css in the root stylesheet folder
+
+you can find a sample in the code
