@@ -49,10 +49,10 @@ module.exports = {
 
   /**
    * Checks the user's username and password
-   * @param  {[type]}   email
-   * @param  {[type]}   password
+   * @param  {String}   email
+   * @param  {String}   password
    * @param  {Function} callback
-   * @return {[type]}
+   * @return {Promise}
    */
   login: function( email, password ) {
 
@@ -111,8 +111,26 @@ module.exports = {
   },
 
   /**
+   * Update the users profile information
+   * @method updateProfile
+   * @param  {String} token - the user token
+   * @param  {Object} user - the user object
+   * @return {Promise} returns promise
+   */
+  updateProfile: function updateProfile(token, user) {
+
+    return new adBox(token, sails.config.adBox).req({
+      path: '/user/' + user.id,
+      method: 'PUT',
+      data: user,
+      headers: { 'Content-Type': 'application/json' }
+    }, true);
+
+  },
+
+  /**
    * Try to create a new user
-   * @param  {[type]}   user
+   * @param  {Object} user
    * @param  {Function} callback
    */
   create: function create(user) {
@@ -136,8 +154,8 @@ module.exports = {
    * this should generate a token that allows the user to update its
    * password, token should expire in 1 hour
    *
-   * @param  {[type]} email [description]
-   * @return {[type]}       [description]
+   * @param  {String} email
+   * @return {Promise}
    */
   requestResetPassword: function requestResetPassword(email, req) {
 
@@ -226,16 +244,6 @@ module.exports = {
     }
 
     return deferred;
-
-  },
-
-  /**
-   * upload an image to S3 and update the profile avatar
-   * @param  {[type]} user  [description]
-   * @param  {[type]} image [description]
-   * @return {[type]}       [description]
-   */
-  uploadAndUpdateProfilePic: function uploadAndUpdateProfilePic(user, image) {
 
   }
 
