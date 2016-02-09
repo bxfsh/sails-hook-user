@@ -15,16 +15,16 @@ Make sure you have a css stylesheet called login.css and that will be the only s
 - GET /resetPassword
 - POST /resetPassword
 
-# How to Install
+## How to Install
 
-1) Install the module
+* 1) Install the module
 
 ```bash
 npm i https://github.com/bxfsh/sails-hook-user.git --save
 ```
 this will install all the EJS files and all the routes 
 
-2) Then you need to override your /config/views.js
+* 2) Then you need to override your /config/views.js
 
 ```
 /**
