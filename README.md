@@ -87,4 +87,4 @@ module.exports.views = {
 
 By default this hook does not generate any css, but do style it you only need to create a css file called login.css in the root stylesheet folder
 
-you can find a sample here[https://github.com/bxfsh/sails-hook-user/blob/master/sample/login.css]
+you can find a sample here https://github.com/bxfsh/sails-hook-user/blob/master/sample/login.css
