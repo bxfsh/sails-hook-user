@@ -6,6 +6,7 @@ var User = require('./../models/User.js');
  * Get the local route path
  */
 var _getViewRoute = function _getViewRoute(name) {
+  console.log(__dirname + '/../../views/' + name + '.ejs');
   return __dirname + '/../../views/' + name + '.ejs';
 };
 

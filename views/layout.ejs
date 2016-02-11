@@ -12,8 +12,8 @@
     <meta http-equiv="pragma" content="no-cache" />
 
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
-
     <link rel="stylesheet" href="/stylesheets/login.css">
+
   </head>
 
   <body data-env="<%= sails.config.env %>">
@@ -22,13 +22,12 @@
     <script src="/jst.js"></script>
     <!--TEMPLATES END-->
 
-    <script src="https://cdn.ravenjs.com/1.3.0/jquery,native/raven.min.js"></script>
+    <script src="//cdn.ravenjs.com/1.3.0/jquery,native/raven.min.js"></script>
+    <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
     <!--SCRIPTS-->
     <!--SCRIPTS END-->
 
-
     <%- body %>
-
 
     <% if (req.session.notificationError){ %>
     <script>
