@@ -87,7 +87,7 @@ module.exports = {
     };
 
     // checking password for white spaces and tabs
-    if ( / /ig.test(user.password) ) {
+    if ( /\s/ig.test(user.password) ) {
       params.message = 'Your password cannot contain white spaces';
       return res.view(_getViewRoute('auth/register'), params);
     }
