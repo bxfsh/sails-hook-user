@@ -69,7 +69,7 @@ module.exports = {
     params.email = params.email || '';
 
     if (!req.param('inviteToken')) {
-      params.message = '\'You must have an invite token to join Cerebro.\'';
+      params.message = '\'You must have an invite token to join.\'';
       return res.view(_getViewRoute('auth/register'), params);
     }
 
@@ -85,6 +85,12 @@ module.exports = {
       lastName    : req.param('lastName'),
       inviteToken : req.param('inviteToken')
     };
+
+    // checking password for white spaces and tabs
+    if ( / /ig.test(user.password) ) {
+      params.message = 'Your password cannot contain white spaces';
+      return res.view(_getViewRoute('auth/register'), params);
+    }
 
     // Creates the client with the API
     User.create(user).then(function(data) {
