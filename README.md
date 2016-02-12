@@ -5,15 +5,22 @@ Creates all the user's functionality for login and registration
 Make sure you have a css stylesheet called login.css and that will be the only style for that page
 
 ## Routes created
-- GET /register
-- POST /register
-- GET /login
-- POST /login
-- GET and POST /logout
-- GET /request_password_reset
-- POST /request_password_reset
-- GET /resetPassword
-- POST /resetPassword
+```
+GET /register
+POST /register
+
+GET /login
+POST /login
+
+GET /logout
+POST /logout
+
+GET /request_password_reset
+POST /request_password_reset
+
+GET /resetPassword
+POST /resetPassword
+```
 
 ## How to Install
 
@@ -26,7 +33,7 @@ this will install all the EJS files and all the routes
 
 * 2) Then you need to override your /config/views.js
 
-```
+```javascript
 /**
  * View Engine Configuration
  * (sails.config.views)
@@ -85,6 +92,6 @@ module.exports.views = {
 
 * 3) Style
 
-By default this hook does not generate any css, but do style it you only need to create a css file called login.css in the root stylesheet folder
+By default this hook does not generate any css, but to style it you only need to create a css file called login.css in the root stylesheet folder
 
 you can find a sample here https://github.com/bxfsh/sails-hook-user/blob/master/sample/login.css
