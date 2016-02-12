@@ -3,49 +3,19 @@ var promise       = require('promised-io/promise');
 var adBox         = require('boxfish-router');
 var colors        = require('colors');
 
+var customLogger = function customLogger() {
+  var args = Array.prototype.slice.call(arguments);
+  args.unshift('[Sails-Hook-User]'.magenta);
+  sails.log.debug.apply(sails, args);
+};
+
 /**
 * User.js
 *
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
+* @description :: Provides authentication service for Boxfish applications.
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
 module.exports = {
-
-  clientId : {
-   type: 'string',
-   unique: true
-  },
-
-  _namespace: '/dev',
-
-  username: {
-    type: 'string',
-    unique: true
-  },
-
-  password: {
-    type: 'string'
-  },
-
-  client_sesecret : { type: 'string' }, // jshint ignore:line
-
-  resource_ids : { // jshint ignore:line
-    type: 'string',
-    defaultsTo: 'boxfish-api'
-  },
-
-  scope : {
-   type: 'string',
-   defaultsTo: 'read,write'
-  },
-
-  authorized_grant_types : { // jshint ignore:line
-    type: 'string',
-    defaultsTo: function () {
-        'use strict';
-        return 'password,client_credentials,refresh_token';
-    }
-  },
 
   /**
    * Checks the user's username and password
@@ -61,7 +31,7 @@ module.exports = {
     var deferred = promise.defer();
     var requireAuth = false;
 
-    sails.log.debug('USER TRYING TO LOGIN:'.yellow, email);
+    customLogger(email, 'is trying to login.');
 
     new adBox(sails.config.adBox.token, sails.config.adBox).req({
       path: '/user/login',
@@ -73,15 +43,12 @@ module.exports = {
       headers: { 'Content-Type': 'application/json' }
     }, requireAuth).then(function(data) {
 
-      console.log(data);
-
-      if (data.user == null) {
+      if (data.user === null) {
         deferred.reject('Wrong Credentials');
         return;
       }
 
       if (data) {
-        // data.user.email = data.user.email.value;
         deferred.resolve(data);
       } else {
         sails.log.error(arguments);
@@ -137,7 +104,7 @@ module.exports = {
 
     'use strict';
 
-    sails.log.debug('Creating User', user);
+    customLogger('Creating User', user);
 
     return new adBox(sails.config.adBox.token, sails.config.adBox).req({
       path: '/user/register',
@@ -163,7 +130,7 @@ module.exports = {
     var template = __dirname + '/../../views/email/reset-password.ejs';
     var fs = require('fs');
 
-    sails.log.debug('[requestResetPassword] Starting'.green);
+    customLogger(email, 'is requesting reset password.');
 
     return new adBox(sails.config.adBox.token, sails.config.adBox).req({
       path: '/user/reset?email=' + email,
@@ -171,22 +138,22 @@ module.exports = {
       headers: { 'Content-Type': 'application/json' }
     }, true).then(function(token) {
 
-      sails.log.debug('[requestResetPassword] Request Complete'.green);
-      sails.log.debug('[requestResetPassword] Reading Template'.green);
+      customLogger('[requestResetPassword] Request Complete'.green);
+      customLogger('[requestResetPassword] Reading Template'.green);
 
       // send email
       var url = req.protocol + '://' + req.host + '/resetPassword?token=' + token + '&email=' + email;
 
       fs.readFile(template, 'utf8', function(err, file) {
 
-        sails.log.debug('[requestResetPassword] File Read Complete'.green);
+        customLogger('[requestResetPassword] File Read Complete'.green);
 
         var html = require('ejs').render(file, {
           title: 'Password Update Request',
           link: url
         });
 
-        sails.log.debug('[requestResetPassword] Sending Email'.green);
+        customLogger('[requestResetPassword] Sending Email'.green);
 
         sails.hooks.email.send(
           'services@boxfish.com',
