@@ -32,8 +32,8 @@ var _onLoginSuccess = function _onLoginSuccess(req, res, data, target) {
     }
   }
 
-  sails.log.debug('User has just mapped out'.green, req.session.user);
-  sails.log.debug(new Date(), 'redirect to', target);
+  sails.log.verbose('User has just mapped out'.green, req.session.user);
+  sails.log.verbose(new Date(), 'redirect to', target);
 
   return res.redirect(target);
 
