@@ -114,8 +114,6 @@ module.exports = {
     // refresh the session for the current user
     this.findByEmail(email).then(function(user) {
 
-      console.log(JSON.stringify(user, null, 2));
-
       var teams = user.userTeamRoles.map(function(i) {
         return {
           id: i.team.id,
@@ -124,8 +122,6 @@ module.exports = {
           teamRole: i.team.teamRole ? i.team.teamRole.name : 'user'
         };
       });
-
-      console.log('_refrehUserSession'.yellow, teams);
 
       deferred.resolve(teams);
 
