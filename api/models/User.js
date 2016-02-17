@@ -31,8 +31,6 @@ module.exports = {
     var deferred = promise.defer();
     var requireAuth = false;
 
-    customLogger(email, 'is trying to login.');
-
     new adBox(sails.config.adBox.token, sails.config.adBox).req({
       path: '/user/login',
       method: 'POST',
@@ -51,12 +49,10 @@ module.exports = {
       if (data) {
         deferred.resolve(data);
       } else {
-        sails.log.error(arguments);
-          deferred.reject({ message: 'Internal Server error' });
+        deferred.reject({ message: 'Internal Server error' });
       }
 
     }, function(err) {
-      sails.log.error(err);
       deferred.reject(err);
     });
 
@@ -74,6 +70,34 @@ module.exports = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     }, true);
+
+  },
+
+  /**
+   * Get user teams
+   */
+  getUserTeams: function getUserTeams(email) {
+
+    var deferred = promise.defer();
+
+    // refresh the session for the current user
+    this.findByEmail(email).then(function(user) {
+
+      var teams = user.userTeamRoles.map(function(i) {
+
+        return {
+          id: i.team.id,
+          name: i.team.name,
+          platform: 'twitter',
+          teamRole: i.teamRole.name
+        };
+      });
+
+      deferred.resolve(teams);
+
+    }, deferred.reject);
+
+    return deferred;
 
   },
 

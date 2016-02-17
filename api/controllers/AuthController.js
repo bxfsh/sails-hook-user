@@ -14,7 +14,7 @@ var _getViewRoute = function _getViewRoute(name) {
  */
 var _onLoginSuccess = function _onLoginSuccess(req, res, data, target) {
 
-  sails.log.info('User has just logged in'.green, data);
+  sails.log.info('User has just logged in'.green, JSON.stringify(data, null, 2));
 
   res.status(200);
   delete data.password;
@@ -32,8 +32,8 @@ var _onLoginSuccess = function _onLoginSuccess(req, res, data, target) {
     }
   }
 
-  sails.log.debug('User has just mapped out'.green, req.session.user);
-  sails.log.debug(new Date(), 'redirect to', target);
+  sails.log.verbose('User has just mapped out'.green, req.session.user);
+  sails.log.verbose(new Date(), 'redirect to', target);
 
   return res.redirect(target);
 
@@ -87,7 +87,7 @@ module.exports = {
     };
 
     // checking password for white spaces and tabs
-    if ( /\s/ig.test(user.password) ) {
+    if (/\s/ig.test(user.password)) {
       params.message = 'Your password cannot contain white spaces';
       return res.view(_getViewRoute('auth/register'), params);
     }
@@ -116,11 +116,7 @@ module.exports = {
 
     }, function(err) {
 
-      sails.log.error('ERROR -------->'.red, err);
-
-      // if (err.messages[0].indexOf('nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement')){
-      //   return res.redirect('/login');
-      // }
+      sails.log.error(err);
 
       return res.view(_getViewRoute('auth/register'), {
         message : err.messages[0],
@@ -158,6 +154,15 @@ module.exports = {
     var pass = req.param('password');
     var target = req.param('target') || '/';
 
+    if (/\s/g.test(pass)) {
+      return res.view(_getViewRoute('auth/login'),
+        {
+          message: 'Your password should not contain spaces or tabs.',
+          title: 'Login',
+          target: target
+        });
+    }
+
     // authenticate the user
     User.login(email, pass).then(function(data) {
 
@@ -174,7 +179,6 @@ module.exports = {
           title: 'Login',
           target: target
         });
-
     });
   },
 

@@ -5,7 +5,7 @@ Creates all the user's functionality for login and registration
 Make sure you have a css stylesheet called login.css and that will be the only style for that page
 
 ## Routes created
-```
+```javascript
 GET /register
 POST /register
 
