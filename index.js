@@ -10,7 +10,7 @@ module.exports = function (sails) {
      * Intialise the hook
      */
     initialize: function(cb) {
-      sails.log.info('Initialising sails-hook-user');
+      sails.log.info('[Sails-Hook-User] Initialising'.green);
       return cb();
     },
 
