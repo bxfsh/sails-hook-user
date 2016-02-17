@@ -61,8 +61,6 @@ module.exports = {
     var deferred = promise.defer();
     var requireAuth = false;
 
-    sails.log.debug('USER TRYING TO LOGIN:'.yellow, email);
-
     new adBox(sails.config.adBox.token, sails.config.adBox).req({
       path: '/user/login',
       method: 'POST',
@@ -73,8 +71,6 @@ module.exports = {
       headers: { 'Content-Type': 'application/json' }
     }, requireAuth).then(function(data) {
 
-      console.log(data);
-
       if (data.user == null) {
         deferred.reject('Wrong Credentials');
         return;
@@ -84,12 +80,10 @@ module.exports = {
         // data.user.email = data.user.email.value;
         deferred.resolve(data);
       } else {
-        sails.log.error(arguments);
-          deferred.reject({ message: 'Internal Server error' });
+        deferred.reject({ message: 'Internal Server error' });
       }
 
     }, function(err) {
-      sails.log.error(err);
       deferred.reject(err);
     });
 
