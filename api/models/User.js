@@ -116,8 +116,6 @@ module.exports = {
 
       var teams = user.userTeamRoles.map(function(i) {
 
-console.log('daniel test 2'.green, JSON.stringify(i, null, 2));
-
         return {
           id: i.team.id,
           name: i.team.name,
