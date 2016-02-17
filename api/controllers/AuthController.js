@@ -14,7 +14,7 @@ var _getViewRoute = function _getViewRoute(name) {
  */
 var _onLoginSuccess = function _onLoginSuccess(req, res, data, target) {
 
-  sails.log.info('User has just logged in'.green, data);
+  sails.log.info('User has just logged in'.green, JSON.stringify(data, null, 2));
 
   res.status(200);
   delete data.password;

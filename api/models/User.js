@@ -73,8 +73,6 @@ module.exports = {
       headers: { 'Content-Type': 'application/json' }
     }, requireAuth).then(function(data) {
 
-      console.log(data);
-
       if (data.user == null) {
         deferred.reject('Wrong Credentials');
         return;
@@ -85,7 +83,7 @@ module.exports = {
         deferred.resolve(data);
       } else {
         sails.log.error(arguments);
-          deferred.reject({ message: 'Internal Server error' });
+        deferred.reject({ message: 'Internal Server error' });
       }
 
     }, function(err) {
@@ -107,6 +105,37 @@ module.exports = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     }, true);
+
+  },
+
+  /**
+   * Get user teams
+   */
+  getUserTeams: function getUserTeams(email) {
+
+    var deferred = promise.defer();
+
+    // refresh the session for the current user
+    this.findByEmail(email).then(function(user) {
+
+      console.log(JSON.stringify(user, null, 2));
+
+      var teams = user.userTeamRoles.map(function(i) {
+        return {
+          id: i.team.id,
+          name: i.team.name,
+          platform: 'twitter',
+          teamRole: i.team.teamRole ? i.team.teamRole.name : 'user'
+        };
+      });
+
+      console.log('_refrehUserSession'.yellow, teams);
+
+      deferred.resolve(teams);
+
+    }, deferred.reject);
+
+    return deferred;
 
   },
 
