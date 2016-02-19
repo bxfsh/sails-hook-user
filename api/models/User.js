@@ -106,6 +106,19 @@ module.exports = {
   },
 
   /**
+   * Gets user by id
+   */
+  getById: function getById(userId) {
+
+    return new adBox(sails.config.adBox.token, sails.config.adBox).req({
+      path: '/user/' + userId,
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    }, true);
+
+  },
+
+  /**
    * Get user teams
    */
   getUserTeams: function getUserTeams(email) {
