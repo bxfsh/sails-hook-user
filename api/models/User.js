@@ -30,6 +30,7 @@ module.exports = {
 
     var deferred = promise.defer();
     var requireAuth = false;
+    var self = this;
 
     new adBox(sails.config.adBox.token, sails.config.adBox).req({
       path: '/user/login',
@@ -74,6 +75,19 @@ module.exports = {
   },
 
   /**
+   * Gets user by id
+   */
+  getById: function getById(userId) {
+
+    return new adBox(sails.config.adBox.token, sails.config.adBox).req({
+      path: '/user/' + userId,
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    }, true);
+
+  },
+
+  /**
    * Get user teams
    */
   getUserTeams: function getUserTeams(email) {
@@ -108,14 +122,32 @@ module.exports = {
    * @param  {Object} user - the user object
    * @return {Promise} returns promise
    */
-  updateProfile: function updateProfile(token, user) {
+  updateBasicProfile: function updateBasicProfile(user, firstName, lastName, company, avatar) {
 
-    return new adBox(token, sails.config.adBox).req({
-      path: '/user/' + user.id,
-      method: 'PUT',
-      data: user,
-      headers: { 'Content-Type': 'application/json' }
-    }, true);
+    var deferred = promise.defer();
+    var url = '/user/' + user.id;
+
+    this.findByEmail(user.email).then(function(userFromDb) {
+
+      var userToSend = {
+        firstName   : firstName || userFromDb.firstName,
+        lastName    : lastName || userFromDb.lastName,
+        company     : company || userFromDb.company,
+        avatar      : avatar || userFromDb.avatar
+      };
+
+      sails.log.debug('updateBasicProfile'.green, url, userToSend);
+
+      new adBox(user.token, sails.config.adBox).req({
+        path: url,
+        method: 'PUT',
+        data: userToSend,
+        headers: { 'Content-Type': 'application/json' }
+      }, true).then(deferred.resolve, deferred.reject);
+
+    }, deferred.reject);
+
+    return deferred;
 
   },
 
