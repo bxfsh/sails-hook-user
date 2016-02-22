@@ -9,17 +9,17 @@
       <div class="alert alert-danger" role="alert"> <i class="icon-warning"></i> <%= message %></div>
     <%}%>
 
-    <input type="hidden" name="target" value="<%= typeof target !== 'undefined' ? target : '' %>"/>
+    <input type="hidden" name="target" value="<%= typeof target !== 'undefined' ? target : '' %>" />
 
     <div class="auth-inputs">
       <div class="input-group">
         <label class="hidden-xs">First Name</label>
-        <input type="text" name="firstName" placeholder="First Name" required>
+        <input type="text" value="<%= typeof firstName !== 'undefined' ? firstName : '' %>" name="firstName" placeholder="First Name" required>
       </div>
 
       <div class="input-group">
         <label class="hidden-xs">Last Name</label>
-        <input type="text" name="lastName" placeholder="Last Name" required>
+        <input type="text" value="<%= typeof lastName !== 'undefined' ? lastName : '' %>" name="lastName" placeholder="Last Name" required>
       </div>
 
       <div class="input-group">
@@ -49,10 +49,8 @@
       </div>
     </div>
 
-    <input type="hidden" name="inviteToken" value="<%= typeof inviteToken !== 'undefined' ? inviteToken : ''  %>">
+    <input type="hidden"  name="inviteToken" value="<%= typeof inviteToken !== 'undefined' ? inviteToken : ''  %>">
 
     <input type="submit" value="Register">
-
   </form>
-
 </div>
