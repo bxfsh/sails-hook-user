@@ -1,0 +1,39 @@
+// Proxima Nova
+@font-face {
+	font-family: 'Proxima Nova';
+	font-weight: normal;
+	src: url("../fonts/Proxima Nova/ProximaNova-Reg.otf") format("opentype");
+}
+
+// ICONS
+@font-face {
+  font-family: boxfish;
+  src: url("../fonts/boxfish.eot") format(embedded-opentype),
+       url("../fonts/boxfish.woff") format(woff),
+       url("../fonts/boxfish.ttf") format(truetype),
+       url("../fonts/boxfish.svg") format(svg);
+  font-weight: 400;
+  font-style: normal;
+}
+
+[class*=" icon-"],
+[class^=icon-] {
+  font-family: boxfish;
+  speak: none;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+	vertical-align: middle;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// These are the only two icons we need
+.icon-boxfish-o:before {
+  content: "\e601";
+}
+.icon-boxfish:before {
+  content: "\e600";
+}
