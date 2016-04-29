@@ -1,0 +1,144 @@
+@import "reset";
+@import "fonts";
+@import "animations";
+@import "colors";
+
+*,
+:before,
+:after {
+  box-sizing: border-box;
+}
+
+html.authentication-form {
+  background: #2d333c;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Proxima Nova", "Helvetica Neue", Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+
+  input, button, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  p {
+    margin: 1em 0;
+    color: $light-grey;
+  }
+
+  .alert {
+    padding: 1em;
+    color: white;
+    border-radius: 4px;
+    margin-bottom: 1em;
+
+    &.alert-danger {
+      background: $red;
+
+      > i {
+        color: $yellow;
+        margin-right: 0.5em;
+      }
+    }
+  }
+
+  .login-form {
+    position: relative;
+    z-index: 20;
+    max-width: 300px;
+    margin: 0 auto;
+    height: 100%;
+    padding-top: 12em;
+
+    .form {
+      padding: 1em;
+      text-align: center;
+    }
+
+    #login-logo {
+      color: $blue;
+      font-size: 4em;
+      margin: 0;
+      margin-bottom: 0.25em;
+      display: block;
+      text-align: center;
+    }
+
+    #cerebro {
+      color: $light-grey;
+      font-size: 1.25em;
+      text-transform: uppercase;
+      text-align: center;
+      font-weight: 400;
+      text-align: center;
+      letter-spacing: 16px;
+      margin-left: 26px;
+      content: "Admin";
+    }
+
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      background: #262c33;
+      outline: none;
+      padding: 1.2em 1em;
+      width: 100%;
+      color: white;
+      border: 1px solid #363d48;
+      border-bottom: none;
+
+      &:focus,
+      &:active {
+        background: #21282F;
+      }
+    }
+
+    input[type="submit"] {
+      display: block;
+      width: 100%;
+      background: $blue;
+      padding: 1.25em 1em;
+      border-radius: 20px;
+      color: white;
+      border: none;
+      outline: none;
+      font-size: 0.8em;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: all .2s ease;
+      cursor: pointer;
+
+      &:hover {
+        background: lighten($blue, 3%);
+        box-shadow: 0 2px 12px 0 rgba($header, 0.3);
+      }
+    }
+
+    .input-group {
+
+      &:first-child input {
+        border-radius: 4px 4px 0 0;
+      }
+
+      &:last-child input {
+        border-radius: 0 0 4px 4px;
+        border-bottom: 1px solid #363d48;
+      }
+    }
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+a {
+  color: $blue;
+  text-align: center;
+  text-decoration: inherit;
+  font-style: inherit;
+  margin: 1em 0;
+  display: block;
+}

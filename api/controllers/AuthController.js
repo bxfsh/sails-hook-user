@@ -26,7 +26,7 @@ var _onLoginSuccess = function _onLoginSuccess(req, res, data, target) {
     if (data.user.teams.length === 1) {
       req.session.user.teamId = data.user.teams[0].id;
     } else {
-      req.session.user.teamId = data.user.teams.filter(function(i) {
+      req.session.user.teamId = data.user.teams.filter(function (i) {
         return !/boxfish/ig.test(i.name) ? i : null;
       })[0].id;
     }
@@ -52,7 +52,7 @@ module.exports = {
     return res.view(_getViewRoute('auth/register'), {
       title: 'Register',
       inviteToken: req.param('inviteToken') || '',
-      email: req.param('email') || ''
+      email: req.param('email') || '',
     });
   },
 
@@ -73,17 +73,17 @@ module.exports = {
       return res.view(_getViewRoute('auth/register'), params);
     }
 
-    if ( req.param('password') !== req.param('confirm-password') ) {
+    if (req.param('password') !== req.param('confirm-password')) {
       params.message = 'Passwords do not match';
       return res.view(_getViewRoute('auth/register'), params);
     }
 
     var user = {
-      email       : req.param('email'),
-      password    : req.param('password'),
-      firstName   : req.param('firstName'),
-      lastName    : req.param('lastName'),
-      inviteToken : req.param('inviteToken')
+      email: req.param('email'),
+      password: req.param('password'),
+      firstName: req.param('firstName'),
+      lastName: req.param('lastName'),
+      inviteToken: req.param('inviteToken'),
     };
 
     // checking password for white spaces and tabs
@@ -93,15 +93,15 @@ module.exports = {
     }
 
     // Creates the client with the API
-    User.create(user).then(function(data) {
+    User.create(user).then(function (data) {
 
       // then we attempt to login
       // we need to login again to get the token for future API transactions
-      User.login(req.param('email'), req.param('password')).then(function(data) {
+      User.login(req.param('email'), req.param('password')).then(function (data) {
 
         return _onLoginSuccess(req, res, data, params.target || '/');
 
-      }, function(error) {
+      }, function (error) {
 
         sails.log.debug(new Date(), 'ATTEMPTED USER LOGIN:', error);
         res.status(403);
@@ -109,20 +109,20 @@ module.exports = {
           {
             message: 'Incorrect Username or Password',
             title: 'Login',
-            target: target
+            target: target,
           });
 
       });
 
-    }, function(err) {
+    }, function (err) {
 
       sails.log.error(err);
 
       return res.view(_getViewRoute('auth/register'), {
-        message : err.messages[0],
+        message: err.messages[0],
         title: 'Register',
-        email: req.param('email') || ''
-       });
+        email: req.param('email') || '',
+      });
 
     });
   },
@@ -130,15 +130,16 @@ module.exports = {
   /**
    * Renders the login form
    */
-  'GET /login': function(req, res, next) {
+  'GET /login': function (req, res, next) {
     'use strict';
+
     var target = req.param('target') || '/';
 
     if (typeof req.session.user === 'undefined' || req.session.user === null) {
       return res.view(_getViewRoute('auth/login'),
         {
           title: 'Login',
-          target: target
+          target: target,
         });
     } else {
       return res.redirect('/');
@@ -148,7 +149,7 @@ module.exports = {
   /**
    * Login post
    */
-  'POST /login': function(req, res, next) {
+  'POST /login': function (req, res, next) {
     'use strict';
     var email = req.param('email');
     var pass = req.param('password');
@@ -159,25 +160,27 @@ module.exports = {
         {
           message: 'Your password should not contain spaces or tabs.',
           title: 'Login',
-          target: target
+          target: target,
         });
     }
 
     // authenticate the user
-    User.login(email, pass).then(function(data) {
+    User.login(email, pass).then(function (data) {
 
       return _onLoginSuccess(req, res, data, target);
 
-    }, function(error) {
+    }, function (error) {
 
       sails.log.debug(new Date(), 'ATTEMPTED USER LOGIN:', error);
+
       // return res.redirect(req.url + '?' + require('querystring').stringify(req.allParams()));
       res.status(403);
       return res.view(_getViewRoute('auth/login'),
         {
           message: 'Incorrect Username or Password',
           title: 'Login',
-          target: target
+          target: target,
+          email: email,
         });
     });
   },
@@ -186,7 +189,7 @@ module.exports = {
    * User Logout
    * @return redirect to the login view
    */
-  'GET /logout': function(req, res) {
+  'GET /logout': function (req, res) {
     'use strict';
     req.session.destroy();
     return res.redirect('/');
@@ -196,7 +199,7 @@ module.exports = {
    * User Logout
    * @return redirect to the login view
    */
-  'POST /logout': function(req, res) {
+  'POST /logout': function (req, res) {
     'use strict';
     req.session.destroy();
     return res.redirect('/');
@@ -208,12 +211,12 @@ module.exports = {
    * :GET shows the form asking for the email address
    *
    */
-  'GET /request_password_reset': function( req, res ) {
+  'GET /request_password_reset': function (req, res) {
     'use strict';
     if (req.method === 'get' || req.method === 'GET') {
       return res.view(_getViewRoute('auth/request_password_reset'), {
         title: 'Request New Password',
-        message: ''
+        message: '',
       });
     }
 
@@ -225,7 +228,7 @@ module.exports = {
    * :POST generates the token and sends the email with the reser URL
    *
    */
-  'POST /request_password_reset': function( req, res ) {
+  'POST /request_password_reset': function (req, res) {
 
     'use strict';
 
@@ -235,17 +238,18 @@ module.exports = {
     if (!regExp.test(req.param('email'))) {
       return res.view(_getViewRoute('auth/request_password_reset'), {
         title: 'Request New Password',
-        message: 'Invalid Email Address.'
+        message: 'Invalid Email Address.',
       });
     }
 
     // TODO: check token and update password
-    User.requestResetPassword(req.param('email'), req).then(function() {
+    User.requestResetPassword(req.param('email'), req).then(function () {
       return res.view(_getViewRoute('auth/request_password_success'), {
         title: 'Request New Password',
-        message: 'Invalid Email Address.'
+        message: 'Invalid Email Address.',
       });
-    }, function() {
+    }, function () {
+
       return res.serverError(arguments);
     });
 
@@ -261,7 +265,7 @@ module.exports = {
    * @param  {[type]} res
    * @return {view}
    */
-  'GET /resetPassword': function(req, res) {
+  'GET /resetPassword': function (req, res) {
 
     'use strict';
 
@@ -270,7 +274,7 @@ module.exports = {
     return res.view(_getViewRoute('auth/reset_password'), {
       title: 'Reset Password',
       token: token,
-      email: email
+      email: email,
     });
 
   },
@@ -285,7 +289,7 @@ module.exports = {
    * @param  {[type]} res
    * @return {view}
    */
-  'POST /resetPassword': function(req, res) {
+  'POST /resetPassword': function (req, res) {
 
     'use strict';
 
@@ -295,21 +299,21 @@ module.exports = {
     if (!token) return res.badRequest('Missing token');
     if (!email) return res.badRequest('Missing email address');
 
-    User.resetPassword(email, token, req.param('password'), req.param('confirm-password')).then(function() {
+    User.resetPassword(email, token, req.param('password'), req.param('confirm-password')).then(function () {
 
       return res.redirect('/login');
 
-    }, function(message) {
+    }, function (message) {
 
       return res.view(_getViewRoute('auth/reset_password'), {
         title: 'Reset Password',
         message: message,
         token: token,
-        email: email
+        email: email,
       });
 
     });
 
-  }
+  },
 
-}
+};
