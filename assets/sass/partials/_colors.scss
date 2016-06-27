@@ -1,0 +1,36 @@
+$header:                rgba(13, 25, 41, 0.95);
+$title-header:          rgba(17, 25, 41, 0.95);
+$light-header:          hsla(222,22%,22%,1);
+$nav-color:             #0d1929;
+$dark-header:						#2D333C;
+$magenta:								#F32C7F;
+$light-green:           #8FB78F;
+$blue: 									#6696dc;
+$light-blue:            rgba(217, 237, 247, 0.43);
+$dark-blue: 						darken($blue, 5%);
+$orange:                #EC9840;
+$red: 									#e15258;
+$dark-red:							#cc4b56;
+$purple:								#8a8acb;
+$dark-purple:						darken($purple, 10%);
+$green: 								#4fa469;
+$yellow: 								#f4b962;
+$background-grey: 			#F0F2F5;
+$border-grey:						#e2e2e2;
+$lighter-grey:					#e8e8e8;
+$modal-grey:						#f6f6f6;
+$button-grey:						#f4f4f4;
+$button-border-grey: 		#dfdfdf;
+$lightest-grey:					#f9f9f9;
+$navy: 									#25313a;
+$dark-navy: 						#161d25;
+$black:									#060606;
+$light-black:						#1f1f1f;
+$light-grey:  					#7f8b99;
+$dark-grey:							#535e68;
+$dark-text:							#808593;
+$border:                1px solid $border-grey;
+
+@mixin nav-gradient {
+  background: linear-gradient(35deg, rgba($nav-color, 0.9) 35%, lighten(rgba($nav-color, 0.9), 8%));
+}
