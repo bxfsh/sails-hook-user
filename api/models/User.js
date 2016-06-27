@@ -32,6 +32,8 @@ module.exports = {
     var requireAuth = false;
     var self = this;
 
+    if (sails) sails.log.debug(sails.config.adBox);
+
     new adBox(sails.config.adBox.token, sails.config.adBox).req({
       path: '/user/login',
       method: 'POST',
