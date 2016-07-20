@@ -49,3 +49,8 @@ gulp.task('postcss', ['sass'], () =>
 
 // Default task. Can be run with 'gulp'
 gulp.task('default', ['sass', 'postcss']);
+
+// Watch task
+gulp.task('watch', () => {
+    gulp.watch('assets/sass/**/*.scss', ['default']);
+});
