@@ -9,6 +9,15 @@
   box-sizing: border-box;
 }
 
+label {
+  font-size: 12px;
+  color: $blue;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 0.5em;
+  display: block;
+}
+
 html.authentication-form {
   background: #2d333c;
   font-size: 14px;
@@ -53,7 +62,6 @@ html.authentication-form {
 
     .form {
       padding: 1em;
-      text-align: center;
     }
 
     #login-logo {
@@ -97,6 +105,7 @@ html.authentication-form {
     }
 
     input[type="submit"] {
+      margin-top: 1em;
       display: block;
       width: 100%;
       background: $blue;
