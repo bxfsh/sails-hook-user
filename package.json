@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -R spec",
-    "start": "sails lift"
   },
   "repository": {
     "type": "git",
