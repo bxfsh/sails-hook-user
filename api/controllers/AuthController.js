@@ -27,7 +27,7 @@ var _onLoginSuccess = function _onLoginSuccess(req, res, data, target) {
       req.session.user.teamId = data.user.teams[0].id;
     } else {
       req.session.user.teamId = data.user.teams.filter(function (i) {
-        return !/boxfish/ig.test(i.name) ? i : null;
+        return /boxfish/ig.test(i.name) ? i : null;
       })[0].id;
     }
   }
