@@ -33,14 +33,10 @@ module.exports = {
     var self = this;
 
     if (!sails.config.adBox) {
-
       sails.log.error('sails.config.adBox is undefined');
       sails.log.error('make sure to add the adBox keys to your sails configs');
       sails.log.error('see https://bitbucket.org/boxfish-ondemand/web-presentation-tool/src/90349e832f8704e8f1c63cf25a968facd6d4afbe/config/env/development.js?at=master&fileviewer=file-view-default#development.js-34');
-    } else {
-      
-      sails.log.debug(sails.config.adBox);
-    }
+    } e
 
     new adBox(sails.config.adBox.token, sails.config.adBox).req({
       path: '/user/login',
@@ -192,57 +188,60 @@ module.exports = {
    */
   requestResetPassword: function requestResetPassword(email, req) {
 
-    var deferred = promise.defer();
-    var template = __dirname + '/../../views/email/reset-password.ejs';
-    var fs = require('fs');
+    return Promise((resolve, reject) => {
 
-    customLogger(email, 'is requesting reset password.');
+      const template = `${__dirname}/../../views/email/reset-password.ejs`;
+      const fs = require('fs');
 
-    return new adBox(sails.config.adBox.token, sails.config.adBox).req({
-      path: '/user/reset?email=' + email,
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }, true).then(function(token) {
+      customLogger(email, 'is requesting reset password.');
 
-      customLogger('[requestResetPassword] Request Complete'.green);
-      customLogger('[requestResetPassword] Reading Template'.green);
+      return new adBox(sails.config.adBox.token, sails.config.adBox).req({
+        path: `/user/reset?email=${email}`,
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      }, true).then(
+        (token) => {
 
-      // send email
-      var url = req.protocol + '://' + req.host + '/resetPassword?token=' + token + '&email=' + email;
+          customLogger('[requestResetPassword] Request Complete'.green);
+          customLogger('[requestResetPassword] Reading Template'.green);
 
-      fs.readFile(template, 'utf8', function(err, file) {
+          // send email
+          var url = req.protocol + '://' + req.host + '/resetPassword?token=' + token + '&email=' + email;
 
-        customLogger('[requestResetPassword] File Read Complete'.green);
+          fs.readFile(template, 'utf8', function(err, file) {
 
-        var html = require('ejs').render(file, {
-          title: 'Password Update Request',
-          link: url
-        });
+            customLogger('[requestResetPassword] File Read Complete'.green);
 
-        customLogger('[requestResetPassword] Sending Email'.green);
+            var html = require('ejs').render(file, {
+              title: 'Password Update Request',
+              link: url
+            });
 
-        sails.hooks.email.send(
-          'services@boxfish.com',
-          [email],
-          'Password Reset Request',
-          null,
-          html,
-          function(err) {
-            if (err) {
-              sails.log.warn('[requestResetPassword] Error Sending Email'.red, err);
-              deferred.reject(err);
-            }
-            else {
-              sails.log.debug('[requestResetPassword] Successfully Sent Email'.green);
-              deferred.resolve(true);
-            }
-          }
-        );
-      });
+            customLogger('[requestResetPassword] Sending Email'.green);
 
-    }, deferred.reject);
+            sails.hooks.email.send(
+              'services@boxfish.com',
+              [email],
+              'Password Reset Request',
+              null,
+              html,
+              function(err) {
+                if (err) {
+                  sails.log.warn('[requestResetPassword] Error Sending Email'.red, err);
+                  reject(err);
+                } else {
+                  sails.log.debug('[requestResetPassword] Successfully Sent Email'.green);
+                  resolve(true);
+                }
+              }
+            );
+          });
 
-    return deferred;
+        }, 
+        (err) => reject(err)
+      );
+
+    });
 
   },
 
