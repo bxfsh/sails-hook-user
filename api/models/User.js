@@ -188,7 +188,7 @@ module.exports = {
    */
   requestResetPassword: function requestResetPassword(email, req) {
 
-    return Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
       const template = `${__dirname}/../../views/email/reset-password.ejs`;
       const fs = require('fs');
