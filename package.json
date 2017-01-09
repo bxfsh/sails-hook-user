@@ -1,6 +1,6 @@
 {
   "name": "@bxfsh/sails-hook-user",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "User authentication for Boxfish web applications.",
   "main": "index.js",
   "scripts": {
