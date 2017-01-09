@@ -36,7 +36,7 @@ module.exports = {
       sails.log.error('sails.config.adBox is undefined');
       sails.log.error('make sure to add the adBox keys to your sails configs');
       sails.log.error('see https://bitbucket.org/boxfish-ondemand/web-presentation-tool/src/90349e832f8704e8f1c63cf25a968facd6d4afbe/config/env/development.js?at=master&fileviewer=file-view-default#development.js-34');
-    } e
+    }
 
     new adBox(sails.config.adBox.token, sails.config.adBox).req({
       path: '/user/login',
