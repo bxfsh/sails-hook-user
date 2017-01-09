@@ -2,10 +2,9 @@
 <html class="authentication-form">
   <head>
     <title><%= typeof title !== 'undefined' ? title + ' | Boxfish' : 'Boxfish' %></title>
-    <!-- Viewport mobile tag for sensible mobile support -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <!-- Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta http-equiv="cache-control" content="max-age=0" />
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="expires" content="0" />
@@ -14,18 +13,17 @@
 
     <!-- Stylsheets -->
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <link rel="stylesheet" href="/stylesheets/boxfish.css" type="text/css">
 
     <style type="text/css">
-      <%- partial('styles.css') %>
+      <%- partial('login.css') %>
     </style>
 
   </head>
 
-  <body data-env="<%= sails.config.env %>">
-
-    <!--TEMPLATES-->
-    <script src="/jst.js"></script>
-    <!--TEMPLATES END-->
+  <body data-env="<%= sails.config.environment %>">
 
     <!--SCRIPTS-->
     <!--SCRIPTS END-->

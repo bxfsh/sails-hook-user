@@ -22,13 +22,23 @@ var _onLoginSuccess = function _onLoginSuccess(req, res, data, target) {
   req.session.authenticated = true;
 
   // setting the team id in the user object
-  if (data.user.teams.length > 0) {
+  if (data.user.teams.length) {
     if (data.user.teams.length === 1) {
       req.session.user.teamId = data.user.teams[0].id;
     } else {
-      req.session.user.teamId = data.user.teams.filter(function (i) {
-        return !/boxfish/ig.test(i.name) ? i : null;
-      })[0].id;
+      
+      var boxfishTeam = data.user.team.filter((team) => {
+        if (/boxfish/ig.test(team.name)) return team;
+      })[0];
+      
+      if ('id' in boxfishTeam) {
+        req.session.user.teamId = boxfishTeam.id;
+      } else {
+        sails.log.warn('User is a member of multiple teams but NOT the Boxfish team');
+        
+        // Set the teamId to the first team in the list
+        req.session.user.teamId = data.user.teams[0].id;
+      }
     }
   }
 
